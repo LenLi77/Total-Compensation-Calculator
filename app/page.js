@@ -199,12 +199,11 @@ export default function Home() {
                       type="text"
                       inputMode="decimal"
                       value={baseSalary}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        // Allow empty, digits, and one decimal point
-                        if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                          setBaseSalary(value);
-                        }
+                      onChange={(e) => setBaseSalary(e.target.value)}
+                      onBlur={(e) => {
+                        // Clean up on blur - remove non-numeric except decimal
+                        const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                        setBaseSalary(cleaned);
                       }}
                       placeholder="2000"
                       className="w-full px-4 py-2.5 border border-slate-300 rounded bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -216,11 +215,10 @@ export default function Home() {
                       type="text"
                       inputMode="decimal"
                       value={bonus}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                          setBonus(value);
-                        }
+                      onChange={(e) => setBonus(e.target.value)}
+                      onBlur={(e) => {
+                        const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                        setBonus(cleaned);
                       }}
                       placeholder="0"
                       className="w-full px-4 py-2.5 border border-slate-300 rounded bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -258,11 +256,10 @@ export default function Home() {
                         type="text"
                         inputMode="decimal"
                         value={benefits.carValue}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                            updateBenefit('carValue', value);
-                          }
+                        onChange={(e) => updateBenefit('carValue', e.target.value)}
+                        onBlur={(e) => {
+                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                          updateBenefit('carValue', cleaned);
                         }}
                         placeholder="25000"
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -288,11 +285,10 @@ export default function Home() {
                         type="text"
                         inputMode="decimal"
                         value={benefits.mealAmount}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                            updateBenefit('mealAmount', value);
-                          }
+                        onChange={(e) => updateBenefit('mealAmount', e.target.value)}
+                        onBlur={(e) => {
+                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                          updateBenefit('mealAmount', cleaned);
                         }}
                         placeholder="4"
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -318,11 +314,10 @@ export default function Home() {
                         type="text"
                         inputMode="decimal"
                         value={benefits.healthAmount}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                            updateBenefit('healthAmount', value);
-                          }
+                        onChange={(e) => updateBenefit('healthAmount', e.target.value)}
+                        onBlur={(e) => {
+                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                          updateBenefit('healthAmount', cleaned);
                         }}
                         placeholder="100"
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -350,11 +345,10 @@ export default function Home() {
                         type="text"
                         inputMode="decimal"
                         value={benefits.phoneAmount}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                            updateBenefit('phoneAmount', value);
-                          }
+                        onChange={(e) => updateBenefit('phoneAmount', e.target.value)}
+                        onBlur={(e) => {
+                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                          updateBenefit('phoneAmount', cleaned);
                         }}
                         placeholder="50"
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -373,11 +367,10 @@ export default function Home() {
                         type="text"
                         inputMode="decimal"
                         value={benefits.trainingAmount}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                            updateBenefit('trainingAmount', value);
-                          }
+                        onChange={(e) => updateBenefit('trainingAmount', e.target.value)}
+                        onBlur={(e) => {
+                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                          updateBenefit('trainingAmount', cleaned);
                         }}
                         placeholder="1000"
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -392,11 +385,10 @@ export default function Home() {
                         type="text"
                         inputMode="decimal"
                         value={benefits.daysAmount}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                            updateBenefit('daysAmount', value);
-                          }
+                        onChange={(e) => updateBenefit('daysAmount', e.target.value)}
+                        onBlur={(e) => {
+                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                          updateBenefit('daysAmount', cleaned);
                         }}
                         placeholder="5"
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -435,11 +427,10 @@ export default function Home() {
                             type="text"
                             inputMode="decimal"
                             value={benefit.value}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                                updateCustomBenefit(benefit.id, 'value', value);
-                              }
+                            onChange={(e) => updateCustomBenefit(benefit.id, 'value', e.target.value)}
+                            onBlur={(e) => {
+                              const cleaned = e.target.value.replace(/[^\d.]/g, '');
+                              updateCustomBenefit(benefit.id, 'value', cleaned);
                             }}
                             placeholder="0"
                             className="col-span-3 px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
