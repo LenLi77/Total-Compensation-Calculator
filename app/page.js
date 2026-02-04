@@ -3,6 +3,40 @@
 import React, { useState } from 'react';
 import { Wallet, Plus, Trash2, Info } from 'lucide-react';
 
+// BenefitToggle moved OUTSIDE of Home component to prevent recreation on every render
+const BenefitToggle = ({ label, checked, onChange, children, info }) => {
+  const inputId = `benefit-${label.replace(/\s+/g, '-').toLowerCase()}`;
+  
+  return (
+    <div className="bg-white rounded-lg p-4 border border-slate-200">
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <input 
+            type="checkbox" 
+            id={inputId}
+            checked={checked} 
+            onChange={(e) => onChange(e.target.checked)} 
+            className="w-5 h-5 text-red-600 focus:ring-red-500 rounded" 
+          />
+          <label 
+            htmlFor={inputId}
+            className="font-medium text-slate-800 cursor-pointer"
+          >
+            {label}
+          </label>
+        </div>
+        {info && (
+          <div className="group relative">
+            <Info className="w-4 h-4 text-slate-400 cursor-help" />
+            <div className="absolute right-0 top-6 w-64 bg-slate-800 text-white text-xs rounded p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">{info}</div>
+          </div>
+        )}
+      </div>
+      {checked && <div className="pl-7">{children}</div>}
+    </div>
+  );
+};
+
 export default function Home() {
   const [country, setCountry] = useState('EE');
   const [baseSalary, setBaseSalary] = useState('2000');
@@ -143,39 +177,6 @@ export default function Home() {
   const totalMonthlyComp = totalAnnualComp / 12;
   const totalAnnualBenefits = annualBenefitsGross;
   const additionalValue = carUsage * 12;
-
-  const BenefitToggle = ({ label, checked, onChange, children, info }) => {
-    const inputId = `benefit-${label.replace(/\s+/g, '-').toLowerCase()}`;
-    
-    return (
-      <div className="bg-white rounded-lg p-4 border border-slate-200">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <input 
-              type="checkbox" 
-              id={inputId}
-              checked={checked} 
-              onChange={(e) => onChange(e.target.checked)} 
-              className="w-5 h-5 text-red-600 focus:ring-red-500 rounded" 
-            />
-            <label 
-              htmlFor={inputId}
-              className="font-medium text-slate-800 cursor-pointer"
-            >
-              {label}
-            </label>
-          </div>
-          {info && (
-            <div className="group relative">
-              <Info className="w-4 h-4 text-slate-400 cursor-help" />
-              <div className="absolute right-0 top-6 w-64 bg-slate-800 text-white text-xs rounded p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">{info}</div>
-            </div>
-          )}
-        </div>
-        {checked && <div className="pl-7">{children}</div>}
-      </div>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8">
