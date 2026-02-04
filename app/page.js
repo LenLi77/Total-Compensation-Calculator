@@ -9,8 +9,11 @@ export default function Home() {
   const [bonus, setBonus] = useState('');
   const [bonusFreq, setBonusFreq] = useState('annual');
   
+  // Extract carValue as separate state (like baseSalary and bonus)
+  const [carValue, setCarValue] = useState('25000');
+  
   const [benefits, setBenefits] = useState({
-    car: false, carValue: '25000',
+    car: false,
     meal: false, mealAmount: '4',
     health: false, healthAmount: '100',
     phone: false, phoneAmount: '50',
@@ -87,13 +90,13 @@ export default function Home() {
   let carTaxCost = 0;
   
   if (benefits.car) {
-    const carValue = parseFloat(benefits.carValue) || 0;
+    const carVal = parseFloat(carValue) || 0;
     if (country === 'EE') {
-      carBIK = carValue * 0.012;
-      carUsage = carValue * 0.03;
+      carBIK = carVal * 0.012;
+      carUsage = carVal * 0.03;
       carTaxCost = carBIK * rules.carTaxRate;
     } else {
-      carBIK = carValue * 0.015;
+      carBIK = carVal * 0.015;
       carTaxCost = carBIK * rules.carTaxRate;
     }
   }
@@ -239,8 +242,8 @@ export default function Home() {
                       <label className="block text-sm text-slate-600 mb-1">Car Market Value (€)</label>
                       <input 
                         type="number" 
-                        value={benefits.carValue} 
-                        onChange={(e) => updateBenefit('carValue', e.target.value)} 
+                        value={carValue} 
+                        onChange={(e) => setCarValue(e.target.value)} 
                         placeholder="25000" 
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" 
                       />
