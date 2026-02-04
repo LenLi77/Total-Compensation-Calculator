@@ -25,7 +25,9 @@ export default function Home() {
   const countries = { EE: 'Estonia', LV: 'Latvia', LT: 'Lithuania' };
   const workDays = 20;
 
-  const updateBenefit = (key, value) => setBenefits({ ...benefits, [key]: value });
+  const updateBenefit = (key, value) => {
+    setBenefits(prev => ({ ...prev, [key]: value }));
+  };
 
   const addCustomBenefit = () => {
     setCustomBenefits([...customBenefits, { id: nextId, name: 'Custom Benefit', value: '0', frequency: 'monthly' }]);
@@ -196,33 +198,16 @@ export default function Home() {
                       Monthly Gross Salary (€)
                     </label>
                     <input
-                      type="text"
-                      inputMode="decimal"
+                      type="number"
                       value={baseSalary}
                       onChange={(e) => setBaseSalary(e.target.value)}
-                      onBlur={(e) => {
-                        // Clean up on blur - remove non-numeric except decimal
-                        const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                        setBaseSalary(cleaned);
-                      }}
                       placeholder="2000"
                       className="w-full px-4 py-2.5 border border-slate-300 rounded bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">Bonus Amount (€)</label>
-                    <input
-                      type="text"
-                      inputMode="decimal"
-                      value={bonus}
-                      onChange={(e) => setBonus(e.target.value)}
-                      onBlur={(e) => {
-                        const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                        setBonus(cleaned);
-                      }}
-                      placeholder="0"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
-                    />
+                    <input type="number" value={bonus} onChange={(e) => setBonus(e.target.value)} placeholder="0" className="w-full px-4 py-2.5 border border-slate-300 rounded bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" />
                   </div>
                 </div>
                 <div>
@@ -252,17 +237,12 @@ export default function Home() {
                   >
                     <div>
                       <label className="block text-sm text-slate-600 mb-1">Car Market Value (€)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={benefits.carValue}
-                        onChange={(e) => updateBenefit('carValue', e.target.value)}
-                        onBlur={(e) => {
-                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                          updateBenefit('carValue', cleaned);
-                        }}
-                        placeholder="25000"
-                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                      <input 
+                        type="number" 
+                        value={benefits.carValue} 
+                        onChange={(e) => updateBenefit('carValue', e.target.value)} 
+                        placeholder="25000" 
+                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" 
                       />
                       {country === 'EE' && (
                         <p className="text-xs text-slate-500 mt-1">Benefit-in-kind: 1.2% monthly (taxed at ~70.5%) | Usage value: 3% monthly (not taxed)</p>
@@ -281,18 +261,7 @@ export default function Home() {
                   >
                     <div>
                       <label className="block text-sm text-slate-600 mb-1">Daily Amount (€)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={benefits.mealAmount}
-                        onChange={(e) => updateBenefit('mealAmount', e.target.value)}
-                        onBlur={(e) => {
-                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                          updateBenefit('mealAmount', cleaned);
-                        }}
-                        placeholder="4"
-                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      />
+                      <input type="number" value={benefits.mealAmount} onChange={(e) => updateBenefit('mealAmount', e.target.value)} placeholder="4" step="0.5" className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" />
                       <p className="text-xs text-slate-500 mt-1">Calculated for 20 working days per month</p>
                     </div>
                   </BenefitToggle>
@@ -310,18 +279,7 @@ export default function Home() {
                   >
                     <div>
                       <label className="block text-sm text-slate-600 mb-1">Monthly Value (€)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={benefits.healthAmount}
-                        onChange={(e) => updateBenefit('healthAmount', e.target.value)}
-                        onBlur={(e) => {
-                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                          updateBenefit('healthAmount', cleaned);
-                        }}
-                        placeholder="100"
-                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      />
+                      <input type="number" value={benefits.healthAmount} onChange={(e) => updateBenefit('healthAmount', e.target.value)} placeholder="100" className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" />
                       {country === 'EE' && healthValue > 33.33 && (
                         <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded">
                           <p className="text-xs text-amber-800">
@@ -341,18 +299,7 @@ export default function Home() {
                   >
                     <div>
                       <label className="block text-sm text-slate-600 mb-1">Monthly Amount (€)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={benefits.phoneAmount}
-                        onChange={(e) => updateBenefit('phoneAmount', e.target.value)}
-                        onBlur={(e) => {
-                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                          updateBenefit('phoneAmount', cleaned);
-                        }}
-                        placeholder="50"
-                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      />
+                      <input type="number" value={benefits.phoneAmount} onChange={(e) => updateBenefit('phoneAmount', e.target.value)} placeholder="50" className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" />
                     </div>
                   </BenefitToggle>
 
@@ -363,36 +310,14 @@ export default function Home() {
                   <BenefitToggle label="Training / Education Budget" checked={benefits.training} onChange={(v) => updateBenefit('training', v)} info="Annual budget for professional development and training">
                     <div>
                       <label className="block text-sm text-slate-600 mb-1">Annual Budget (€)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={benefits.trainingAmount}
-                        onChange={(e) => updateBenefit('trainingAmount', e.target.value)}
-                        onBlur={(e) => {
-                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                          updateBenefit('trainingAmount', cleaned);
-                        }}
-                        placeholder="1000"
-                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      />
+                      <input type="number" value={benefits.trainingAmount} onChange={(e) => updateBenefit('trainingAmount', e.target.value)} placeholder="1000" className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" />
                     </div>
                   </BenefitToggle>
 
                   <BenefitToggle label="Additional Days Off" checked={benefits.extraDays} onChange={(v) => updateBenefit('extraDays', v)} info="Company-provided extra vacation days beyond legal minimum. These may be health days, earned through length of service, or additional wellness days.">
                     <div>
                       <label className="block text-sm text-slate-600 mb-1">Extra Days Per Year</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={benefits.daysAmount}
-                        onChange={(e) => updateBenefit('daysAmount', e.target.value)}
-                        onBlur={(e) => {
-                          const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                          updateBenefit('daysAmount', cleaned);
-                        }}
-                        placeholder="5"
-                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      />
+                      <input type="number" value={benefits.daysAmount} onChange={(e) => updateBenefit('daysAmount', e.target.value)} placeholder="5" className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500" />
                       <p className="text-xs text-slate-500 mt-1">Value calculated as daily salary × extra days</p>
                     </div>
                   </BenefitToggle>
@@ -424,14 +349,9 @@ export default function Home() {
                             className="col-span-5 px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                           />
                           <input
-                            type="text"
-                            inputMode="decimal"
+                            type="number"
                             value={benefit.value}
                             onChange={(e) => updateCustomBenefit(benefit.id, 'value', e.target.value)}
-                            onBlur={(e) => {
-                              const cleaned = e.target.value.replace(/[^\d.]/g, '');
-                              updateCustomBenefit(benefit.id, 'value', cleaned);
-                            }}
                             placeholder="0"
                             className="col-span-3 px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                           />
